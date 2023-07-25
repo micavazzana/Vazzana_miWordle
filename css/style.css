@@ -1,0 +1,176 @@
+/* Paleta de colores
+Verde:#75aa4e
+Amarillo:#f2c54a
+Gris claro1: #ededf2
+Gris claro2: #dcdce1
+Gris medio: #a4a4a9
+Gris oscuro1: #6b6b71
+Gris oscuro2: #46464b
+*/
+@font-face {
+   font-family: "Novecentosanswide-DemiBold";
+   src: url("../assets/fuentes/Novecentosanswide-DemiBold-webfont.woff2")
+         format("woff2"),
+      url("../assets/fuentes/Novecentosanswide-DemiBold-webfont.woff")
+         format("woff");
+   font-weight: normal;
+   font-style: normal;
+}
+* {
+   font-family: "Novecentosanswide-DemiBold";
+   margin: 0;
+   padding: 0;
+}
+.center {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+/* Barra de opciones */
+.nav {
+   margin-left: 20%;
+   margin-right: 20%;
+   display: flex;
+   justify-content: end;
+}
+.nav button {
+   margin: 3px;
+   width: 35px;
+   height: 35px;
+   border: 0px solid;
+   border-radius: 5px;
+   background-color: #dcdce1;
+}
+.nav button:hover {
+   transform: scale(110%);
+   -webkit-transform: scale(110%);
+   -o-transform: scale(110%);
+   -moz-transform: scale(110%);
+   background-color: #ededf2;
+}
+.nav button i {
+   align-self: center;
+   color: #46464b;
+   font-size: 20px;
+}
+
+/* Menu de ajustes */
+.ajustes {
+   display: flex;
+   flex-direction: column;
+   margin-top: 30px;
+   margin-left: 20%;
+   margin-right: 20%;
+}
+.top-bar {
+   display: flex;
+   align-items: center;
+   border: 0px;
+   border-radius: 10px;
+   background-color: #ededf2;
+   height: 45px;
+}
+.top-bar h1 {
+   flex: 1;
+   display: flex;
+   justify-content: center;
+   padding-left: 50px;
+   font-size: 28px;
+}
+.top-bar .close {
+   display: flex;
+   justify-content: end;
+   margin-right: 15px;
+   font-size: 25px;
+   color: #46464b;
+}
+.top-bar .close:hover {
+   color: #6b6b71;
+}
+.cant-letras {
+   margin: 25px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.cant-letras h2 {
+   margin: 15px;
+   font-size: 20px;
+}
+.cant-letras button {
+   margin: 3px;
+   width: 45px;
+   height: 45px;
+   border: 0px;
+   border-radius: 5px;
+   margin-bottom: 10px;
+   background-color: #ededf2;
+   font-size: 20px;
+}
+.cant-letras button:hover {
+   background-color: #dcdce1;
+}
+.cant-letras button.selected {
+   background-color: #75aa4e;
+   color: white;
+}
+.select-dark-mode {
+   text-align: center;
+   font-size: 19px;
+}
+
+/* Info */
+.info {
+   display: flex;
+   flex-direction: column;
+   margin-top: 30px;
+   margin-left: 20%;
+   margin-right: 20%;
+   text-align: center;
+   font-size: 18px;
+}
+.how-to {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+.how-to p {
+   margin: 35px;
+}
+
+/* Juego */
+.contenedor-filas {
+    margin-top: 30px;
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    flex-direction: column;
+  }
+.fila {
+   margin-bottom: 5px;
+}
+.casillero {
+   border: 2px solid #a4a4a9;
+   height: 56px;
+   width: 56px;
+   margin: 3px;
+   border-radius: 5px;
+   text-align: center;
+   color: black;
+   font-size: 35px;
+}
+.palabra-jugada {
+   color: white;
+   border: 0px;
+   margin: 5px;
+}
+.caliente {
+   background-color: #75aa4e;
+}
+.tibio {
+   background-color: #f2c54a;
+}
+.frio {
+   background-color: #a4a4a9;
+}
