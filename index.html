@@ -1,75 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Iconos-->
-    <script src="https://kit.fontawesome.com/0b836feca7.js" crossorigin="anonymous"></script>
-    <!--Estilos-->
-    <link rel="stylesheet" href="./css/style.css">
-    <title>Words por Mica Vazzana</title>
-</head>
-<body>
-    <!-- OPCIONES MENU -->
-    <header>
-        <nav class="nav">
-            <button id="btn1" type="button"><i class="fa-solid fa-gear"></i></button>
-            <button id="btn2" type="button"><i class="fa-solid fa-circle-info"></i></button>
-        </nav>
-    </header>
+<html lang="es">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!--Iconos-->
+      <script
+         src="https://kit.fontawesome.com/0b836feca7.js"
+         crossorigin="anonymous"
+      ></script>
+      <!--Estilos-->
+      <link rel="stylesheet" href="./css/style.css" />
+      <title>Wordle por Mica Vazzana</title>
+   </head>
+   <body>
+      <!-- OPCIONES MENU -->
+      <header>
+         <nav class="nav">
+            <button id="btn-ajustes" type="button">
+               <i class="fa-solid fa-gear"></i>
+            </button>
+            <button id="btn-info" type="button">
+               <i class="fa-solid fa-circle-info"></i>
+            </button>
+         </nav>
+      </header>
 
-    <!-- SECCION JUEGO -->
-    <section id="juego" class="center">
-        <div class="contenedor-filas">
-            <!--Aca creo con el DOM la cantidad de casilleros segun letras toque-->
-        </div>
-    </section><!--Fin section juego-->
+      <!-- SECCION JUEGO -->
+      <section id="juego" class="centrar">
+         <div class="contenedor-filas">
+            <!--Aca creo con el DOM la cantidad de casilleros segun cantidad letras elija-->
+         </div>
+      </section>
+      <!--Fin section juego-->
 
-    <!-- SECCION Ajustes -->
-    <section id="ajustes" class="ajustes">
-        <div class="top-bar">
+      <!-- SECCION Ajustes -->
+      <section id="ajustes" class="ajustes">
+         <div class="barra-titulo">
             <h1>AJUSTES</h1>
             <div>
-                <i id="close1" class="close fa-solid fa-xmark"></i>
+               <i id="cerrar-ajustes" class="cerrar fa-solid fa-xmark"></i>
             </div>
-        </div>
+         </div>
 
-        <div class="cant-letras">      
-            <h2>NÚMERO DE LETRAS</h2>    
+         <div class="cant-letras">
+            <h2>NÚMERO DE LETRAS</h2>
             <div>
-                <button id="btn4-letras" cant="4">4</button>
-                <button cant="5">5</button>
-                <button cant="6">6</button>
-                <button cant="7">7</button>
-                <button cant="8">8</button>
+               <button id="btn4-letras" cantidad="4">4</button>
+               <button id="btn5-letras" cantidad="5">5</button>
+               <button cantidad="6">6</button>
+               <button cantidad="7">7</button>
+               <button cantidad="8">8</button>
             </div>
-        </div>
+         </div>
 
-        <div class="select-dark-mode">
+         <div class="seleccionar-modo-oscuro">
             <p>MODO OSCURO</p>
-        </div>
-    </section><!--Fin section Ajustes-->
-    
-     <!-- SECCION Informacion -->
-    <section id="info" class="info">
-        <div class="top-bar">
+         </div>
+      </section>
+      <!--Fin section Ajustes-->
+
+      <!-- SECCION Informacion -->
+      <section id="info" class="info">
+         <div class="barra-titulo">
             <h1>COMO JUGAR</h1>
             <div>
-                <i id="close2" class="close fa-solid fa-xmark"></i>
+               <i id="cerrar-info" class="cerrar fa-solid fa-xmark"></i>
             </div>
-        </div>
-        <div class="how-to">
-            <p>Adivina la palabra en 6 intentos.
-            <br>Después de cada intento, el color de las letras cambia para mostrar qué tan cerca estás de adivinar la palabra.</p>
-            <div class="casillero center palabra-jugada caliente">A</div>
-            <p>Si la letra está coloreada de verde entonces la letra existe en la palabra y se encuentra en su posición correcta.</p>
-            <div class="casillero center palabra-jugada tibio">B</div>
-            <p>Si la letra está coloreada de amarillo entonces la letra existe en la palabra pero no está en su posición correcta.</p>
-            <div class="casillero center palabra-jugada frio">C</div>
-            <p>Si la letra está coloreada en gris entonces la letra no existe en la palabra.</p>
-        </div>
-    </section><!--Fin section Info-->
+         </div>
+         <div class="descripcion-como-jugar">
+            <p>
+               Adivina la palabra en 6 intentos. <br />Después de cada intento,
+               el color de las letras cambia para mostrar qué tan cerca estás de
+               adivinar la palabra.
+            </p>
+            <div class="casillero centrar palabra-jugada caliente">A</div>
+            <p>
+               Si la letra está coloreada de verde entonces la letra existe en
+               la palabra y se encuentra en su posición correcta.
+            </p>
+            <div class="casillero centrar palabra-jugada tibio">B</div>
+            <p>
+               Si la letra está coloreada de amarillo entonces la letra existe
+               en la palabra pero no está en su posición correcta.
+            </p>
+            <div class="casillero centrar palabra-jugada frio">C</div>
+            <p>
+               Si la letra está coloreada en gris entonces la letra no existe en
+               la palabra.
+            </p>
+         </div>
+      </section>
+      <!--Fin section Info-->
 
-    <script src="./js/app.js"></script>
-</body>
+      <script src="./js/app.js"></script>
+   </body>
 </html>

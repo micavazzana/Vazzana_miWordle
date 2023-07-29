@@ -21,7 +21,7 @@ Gris oscuro2: #46464b
    margin: 0;
    padding: 0;
 }
-.center {
+.centrar {
    display: flex;
    justify-content: center;
    align-items: center;
@@ -63,7 +63,7 @@ Gris oscuro2: #46464b
    margin-left: 20%;
    margin-right: 20%;
 }
-.top-bar {
+.barra-titulo {
    display: flex;
    align-items: center;
    border: 0px;
@@ -71,21 +71,21 @@ Gris oscuro2: #46464b
    background-color: #ededf2;
    height: 45px;
 }
-.top-bar h1 {
+.barra-titulo h1 {
    flex: 1;
    display: flex;
    justify-content: center;
    padding-left: 50px;
    font-size: 28px;
 }
-.top-bar .close {
+.barra-titulo .cerrar {
    display: flex;
    justify-content: end;
    margin-right: 15px;
    font-size: 25px;
    color: #46464b;
 }
-.top-bar .close:hover {
+.barra-titulo .cerrar:hover {
    color: #6b6b71;
 }
 .cant-letras {
@@ -111,11 +111,11 @@ Gris oscuro2: #46464b
 .cant-letras button:hover {
    background-color: #dcdce1;
 }
-.cant-letras button.selected {
+.cant-letras button.seleccionado {
    background-color: #75aa4e;
    color: white;
 }
-.select-dark-mode {
+.seleccionar-modo-oscuro {
    text-align: center;
    font-size: 19px;
 }
@@ -130,23 +130,23 @@ Gris oscuro2: #46464b
    text-align: center;
    font-size: 18px;
 }
-.how-to {
+.descripcion-como-jugar {
    display: flex;
    flex-direction: column;
    align-items: center;
 }
-.how-to p {
+.descripcion-como-jugar p {
    margin: 35px;
 }
 
 /* Juego */
 .contenedor-filas {
-    margin-top: 30px;
-    margin-left: 20%;
-    margin-right: 20%;
-    display: flex;
-    flex-direction: column;
-  }
+   margin-top: 30px;
+   margin-left: 20%;
+   margin-right: 20%;
+   display: flex;
+   flex-direction: column;
+}
 .fila {
    margin-bottom: 5px;
 }
