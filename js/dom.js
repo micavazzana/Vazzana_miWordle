@@ -1,3 +1,51 @@
+/**
+* Clase juego
+* Maneja la logica del juego
+* Controla la interaccion entre las distintas clases
+*/
+class Juego{
+
+   palabra;
+   intentos;
+
+   /**
+    * Constructor.
+    * El tablero se inicializara con el largo de la palabra
+    * @param {string} palabra - palabra que inicializara el atributo del objeto
+    */
+   constructor(palabra){
+       this.palabra = palabra.toUpperCase();
+       this.intentos = 6;
+   }
+
+   /**
+    * Controla el estado del juego. Su estado por defecto es "Continue".
+    * Cambia su estado al terminar.
+    * Se termina porque se han adivinado las letras o porque se han acabado la cantidad de intentos.
+    * @returns
+    */
+   estadoJuego(palabra){
+      let retorno;
+      if(this.palabra !=palabra){
+         this.intentos--;
+         retorno = "Continue";
+      }
+      if(this.intentos == 0)
+      {
+         retorno = "Fail";
+      }
+      else if(this.palabra == palabra)
+      {
+         retorno = "Win";
+      }
+      return retorno;
+   }
+}
+
+//Incorporo un json
+const arrayPalabras = ["Naranja","Manzana","Coco","Perro","Gato","Computadora","Libro","Chocolate","Piano","Guitarra","Pintura","Elefante","Raton","Estrella","Luna","Pepino","Whisky","Atenta","Flacido","Ataque"];
+
+/*********************************** */
 const sectionJuego = document.getElementById("juego");
 const sectionAjustes = document.getElementById("ajustes");
 const sectionInfo = document.getElementById("info");
@@ -40,6 +88,7 @@ function displayJuego() {
 }
 
 /************** Control de Casilleros *****************/
+var juego;
 
 //Variables que manejaran los indices de los casilleros y los numeros de fila
 let index = 0;
@@ -63,8 +112,10 @@ window.addEventListener("keydown", procesarTeclaPresionada);
  */
 function crearCasilleros() {
    //Obtengo la cantidad de casilleros a crear desde el atributo cantidad que estableci en el html
-   let cantidad = parseInt(this.getAttribute("cantidad"));
-
+   cantidad = parseInt(this.getAttribute("cantidad"));
+   comenzarJuego(cantidad);
+   
+   console.log(juego.palabra);
    //Borro lo que hay en el inner del contenedor para crear los casilleros que corresponden cada vez
    const contenedor = document.querySelector(".contenedor-filas");
    contenedor.innerHTML = "";
@@ -101,7 +152,7 @@ function cambiarEstiloBotonSeleccionado(boton) {
       if (btn == boton)
          btn.classList.add("seleccionado");
       //Sino remuevo de todos los botones la clase para que no queden coloreados en la siguiente eleccion.
-      else 
+      else
          btn.classList.remove("seleccionado");
    });
 }
@@ -125,7 +176,7 @@ function procesarTeclaPresionada(event) {
          index--;
          const casillero = casilleros[index];
          casillero.textContent = "";
-         console.log(index);
+         casillero.classList.remove("escrito");
       }
    }
    //Si por el contrario escribe
@@ -134,15 +185,13 @@ function procesarTeclaPresionada(event) {
       if (index < casilleros.length && (event.key >= "a" && event.key <= "z") || event.key == "ñ") {
          const casillero = casilleros[index];
          casillero.textContent = event.key.toUpperCase();
-         index = index + 1;
-         console.log(index);
+         index++;
+         casillero.classList.add("escrito");
       }
       //Chequeo si termino de escribir y quiere probar la palabra
       if (casilleros.length == index && event.key == "Enter") {
          chequearPalabra(casilleros);
-         numeroFila++; //Fijarme de controlar que si llega a 6 se acabaron los intentos
-         index = 0;
-         //podria meter una animacion
+          //Fijarme de controlar que si llega a 6 se acabaron los intentos
       }
    }
 }
@@ -152,11 +201,93 @@ function procesarTeclaPresionada(event) {
  * @param {HTMLCollection} casilleros
  */
 function chequearPalabra(casilleros) {
+   
    let palabra = "";
    for (const div of casilleros) {
       palabra += div.textContent;
    }
-   //Chequear que la palabra exista.
-   //Analizar que letras estan bien y cuales mal
-   //cambiar el estilo de cada letra
+
+   if(verificarPalabra(palabra))
+   {
+      for(let i = 0; i < juego.palabra.length; i++)
+      {
+         casilleros[i].classList.add("palabra-jugada");
+   
+         if(casilleros[i].textContent == juego.palabra[i])
+         {
+            casilleros[i].classList.add("caliente");
+         }
+         else if(juego.palabra.includes(casilleros[i].textContent))
+         {
+            casilleros[i].classList.add("tibio");
+         }
+         else {
+            casilleros[i].classList.add("frio");
+         }
+      }
+      numeroFila++;
+      index = 0;
+      let estadoJuego = juego.estadoJuego(palabra);
+      if(estadoJuego == "Win")
+      {
+         console.log("Ganaste");
+      }
+      else if(estadoJuego == "Fail")
+         console.log("Perdiste");
+      else
+      console.log("Te quedan " + juego.intentos + " intentos");
+      
+   }
+   else {
+      console.log("palabra no existe");
+      //ejecuto animacion y alerto "palabra no encontrada"
+   }
+}
+
+/**
+ * Chequea que la palabra exista en el array
+ * @param {*} palabra 
+ * @returns 
+ */
+function verificarPalabra(palabra){
+   const arrAux = arrayPalabras.map((p)=>p.toUpperCase())
+   return arrAux.includes(palabra);
+}
+
+
+function elegirArray(cantidad){
+   switch(cantidad){
+      case 4:
+         return arrayPalabras.filter((elemento)=>{
+            return elemento.length == 4;
+         })
+
+      case 5:
+         return arrayPalabras.filter((elemento)=>{
+            return elemento.length == 5;
+         })
+         
+      case 6:
+         return arrayPalabras.filter((elemento)=>{
+            return elemento.length == 6;
+         })
+         
+      case 7:
+         return arrayPalabras.filter((elemento)=>{
+            return elemento.length == 7;
+         })
+      
+      case 8:
+         return arrayPalabras.filter((elemento)=>{
+            return elemento.length == 8;
+         })
+   }
+}
+
+function comenzarJuego(cantidad){
+   const arrElegido = elegirArray(cantidad);
+   //Consigo un indice aleatorio del array para construir un nuevo juego con esa palabra
+   let indiceAleatorio = Math.floor(Math.random() * arrElegido.length);
+   //Instancio el juego con la palabra elegida
+   juego = new Juego(arrElegido[indiceAleatorio]);
 }
