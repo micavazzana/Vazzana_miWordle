@@ -17,25 +17,40 @@ displayInfo();
  * Oculta la sección Juego e Info.
  */
 function displayAjustes() {
-   sectionAjustes.style.display = "";
-   sectionJuego.style.display = "none";
-   sectionInfo.style.display = "none";
+   sectionAjustes.classList.add("mostrar");
+   sectionAjustes.classList.remove("ocultar");
+
+   sectionInfo.classList.add("ocultar");
+   sectionInfo.classList.remove("mostrar");
+
+   sectionJuego.classList.add("ocultar");
+   sectionJuego.classList.remove("mostrar");
 }
 /**
  * Muestra la sección Info.
  * Oculta la sección Juego y Ajustes.
  */
 function displayInfo() {
-   sectionInfo.style.display = "";
-   sectionJuego.style.display = "none";
-   sectionAjustes.style.display = "none";
+   sectionInfo.classList.add("mostrar");
+   sectionInfo.classList.remove("ocultar");
+
+   sectionAjustes.classList.add("ocultar");
+   sectionAjustes.classList.remove("mostrar");
+   
+   sectionJuego.classList.add("ocultar");
+   sectionJuego.classList.remove("mostrar");
 }
 /**
  * Muestra la sección Juego.
  * Oculta la sección Ajustes e Info.
  */
 function displayJuego() {
-   sectionJuego.style.display = "";
-   sectionAjustes.style.display = "none";
-   sectionInfo.style.display = "none";
+   sectionJuego.classList.add("mostrar");
+   sectionJuego.classList.remove("ocultar");
+
+   sectionAjustes.classList.add("ocultar");
+   sectionAjustes.classList.remove("mostrar");
+
+   sectionInfo.classList.add("ocultar");
+   sectionInfo.classList.remove("mostrar");
 }

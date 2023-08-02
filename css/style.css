@@ -213,3 +213,11 @@ Gris oscuro2: #46464b
 .replay:hover {
    background-color: #dcdce1;
 }
+
+/*Estilos para el display*/
+.mostrar{
+   display: block;
+}
+.ocultar{
+   display: none;
+}

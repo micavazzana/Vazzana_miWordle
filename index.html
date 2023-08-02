@@ -26,78 +26,84 @@
       </header>
 
       <!-- SECCION JUEGO -->
-      <section id="juego" class="centrar columna">
-         <div class="bienvenido">
-            <h1>MI WORDLE</h1>
+      <section id="juego">
+         <div class="centrar columna">
+            <div class="bienvenido">
+               <h1>MI WORDLE</h1>
+            </div>
+            <div class="contenedor-filas">
+               <!--Aca creo con el DOM la cantidad de casilleros segun cantidad letras elija-->
+            </div>
+            <div class="notificacion">
+               <!--Aca creo con el DOM la notificacion del estado del juego-->
+            </div>
+            <button class="replay">Volver a jugar</button>
          </div>
-         <div class="contenedor-filas">
-            <!--Aca creo con el DOM la cantidad de casilleros segun cantidad letras elija-->
-         </div>
-         <div class="notificacion">
-            <!--Aca creo con el DOM la notificacion del estado del juego-->
-         </div>
-         <button class="replay">Volver a jugar</button>
       </section>
       <!--Fin section juego-->
 
       <!-- SECCION Ajustes -->
-      <section id="ajustes" class="ajustes">
-         <div class="barra-titulo">
-            <h1>AJUSTES</h1>
-            <div>
-               <i id="cerrar-ajustes" class="cerrar fa-solid fa-xmark"></i>
+      <section id="ajustes">
+         <div class="ajustes">
+            <div class="barra-titulo">
+               <h1>AJUSTES</h1>
+               <div>
+                  <i id="cerrar-ajustes" class="cerrar fa-solid fa-xmark"></i>
+               </div>
             </div>
-         </div>
 
-         <div class="cant-letras">
-            <h2>NÚMERO DE LETRAS</h2>
-            <div>
-               <button id="btn4-letras" cantidad="4">4</button>
-               <button cantidad="5">5</button>
-               <button cantidad="6">6</button>
-               <button cantidad="7">7</button>
-               <button cantidad="8">8</button>
+            <div class="cant-letras">
+               <h2>NÚMERO DE LETRAS</h2>
+               <div>
+                  <button id="btn4-letras" cantidad="4">4</button>
+                  <button cantidad="5">5</button>
+                  <button cantidad="6">6</button>
+                  <button cantidad="7">7</button>
+                  <button cantidad="8">8</button>
+               </div>
             </div>
-         </div>
 
-         <div class="seleccionar-modo-oscuro">
-            <p>MODO OSCURO</p>
+            <div class="seleccionar-modo-oscuro">
+               <p>MODO OSCURO</p>
+            </div>
          </div>
       </section>
       <!--Fin section Ajustes-->
 
       <!-- SECCION Informacion -->
-      <section id="info" class="info">
-         <div class="bienvenido">
-            <h1>BIENVENIDO A MI WORDLE</h1>
-         </div>
-         <div class="barra-titulo">
-            <h1>COMO JUGAR</h1>
-            <div>
-               <i id="cerrar-info" class="cerrar fa-solid fa-xmark"></i>
+      <section id="info">
+         <div class="info">
+            <div class="bienvenido">
+               <h1>BIENVENIDO A MI WORDLE</h1>
             </div>
-         </div>
-         <div class="descripcion-como-jugar">
-            <p>
-               Adivina la palabra en 6 intentos. <br />Después de cada intento,
-               el color de las letras cambia para mostrar qué tan cerca estás de
-               adivinar la palabra.
-            </p>
-            <div class="casillero centrar palabra-jugada caliente">A</div>
-            <p>
-               Si la letra está coloreada de verde entonces la letra existe en
-               la palabra y se encuentra en su posición correcta.
-            </p>
-            <div class="casillero centrar palabra-jugada tibio">B</div>
-            <p>
-               Si la letra está coloreada de amarillo entonces la letra existe
-               en la palabra pero no está en su posición correcta.
-            </p>
-            <div class="casillero centrar palabra-jugada frio">C</div>
-            <p>
-               Si la letra está coloreada en gris entonces la letra no existe en
-               la palabra.
-            </p>
+            <div class="barra-titulo">
+               <h1>COMO JUGAR</h1>
+               <div>
+                  <i id="cerrar-info" class="cerrar fa-solid fa-xmark"></i>
+               </div>
+            </div>
+            <div class="descripcion-como-jugar">
+               <p>
+                  Adivina la palabra en 6 intentos. <br />Después de cada
+                  intento, el color de las letras cambia para mostrar qué tan
+                  cerca estás de adivinar la palabra.
+               </p>
+               <div class="casillero centrar palabra-jugada caliente">A</div>
+               <p>
+                  Si la letra está coloreada de verde entonces la letra existe
+                  en la palabra y se encuentra en su posición correcta.
+               </p>
+               <div class="casillero centrar palabra-jugada tibio">B</div>
+               <p>
+                  Si la letra está coloreada de amarillo entonces la letra
+                  existe en la palabra pero no está en su posición correcta.
+               </p>
+               <div class="casillero centrar palabra-jugada frio">C</div>
+               <p>
+                  Si la letra está coloreada en gris entonces la letra no existe
+                  en la palabra.
+               </p>
+            </div>
          </div>
       </section>
       <!--Fin section Info-->

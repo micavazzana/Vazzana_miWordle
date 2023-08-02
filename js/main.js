@@ -1,9 +1,14 @@
+//Juego de adivinar palabra. Desarrollé el juego wordle.
+//Este script maneja la lógica del juego y la interacción con el DOM.
+//A futuro mi idea es modularizarlo en archivos para separar el manejo del DOM del el manejo del juego.
+
 import { Juego } from "./juego.js";
 
-/************ Manejo del juego **********/
+/************ Inicio del juego **********/
 let juego;
+let btnSeleccionado = document.getElementById("btn4-letras"); //El juego comienza con 4 letras por defecto
 
-//Incorporo un json
+//Incorporo un json para cargar mi array de palabras
 const arrayPalabras = cargarJson();
 
 //Creo una lista de todos los nodos boton. Agrego un escuchador para cada boton.
@@ -13,9 +18,13 @@ listBtn.forEach((btn) =>
    btn.addEventListener("click", () => {
       //Obtengo la cantidad de casilleros a crear desde el atributo cantidad que estableci en el html
       let cantidad = parseInt(btn.getAttribute("cantidad"));
+      //Guardo el boton seleccionado en la variable global
+      btnSeleccionado = btn;
       //Intancio el juego segun la cantidad de letras que se eligio
       comenzarJuego(arrayPalabras, cantidad);
+      //Limpio el contenedor de mensajes
       mostrarNotificacion("");
+      //Creo casilleros y coloreo el botón que determina con qué cantidad de letras estamos jugando
       crearCasilleros(cantidad);
       cambiarEstiloBotonSeleccionado(btn);
    })
@@ -30,11 +39,10 @@ window.addEventListener("keydown", procesarTeclaPresionada);
 document.querySelector(".replay").addEventListener("click", iniciarJuego);
 
 
-
-/********** Funciones de casilleros **********/
+/********** Funciones **********/
 
 /**
- * Se ocupa de crear los casilleros segun la cantidad de letras elegida.
+ * Crea los casilleros segun la cantidad de letras elegida.
  * @param {number} cantidad - La cantidad de letras elegidas.
  */
 function crearCasilleros(cantidad) {
@@ -75,13 +83,11 @@ function cambiarEstiloBotonSeleccionado(boton) {
    });
 }
 
-/********** Funcion que maneja el input del jugador **********/
-
 /**
  * Función que se suscribe al evento "keydown".
- * Se ocupará de obtener lo que el usuario teclea y colocarlo dentro de los casilleros.
+ * Se ocupa de obtener lo que el usuario teclea y colocarlo dentro de los casilleros.
  * Si el usuario escribe se ocupará de incrementar los indices validando que no quede fuera del rango,
- * por el contrario si borra tambien validará lo mismo. Por otra parte también valida que lo ingresado sean letras válidas.
+ * si borra tambien validará lo mismo. Por otra parte también valida que lo ingresado sean letras válidas.
  * @param {Object} event - Objeto event que tiene la información del evento que ocurrió. En este caso la tecla presionada.
  */
 function procesarTeclaPresionada(event) {
@@ -118,12 +124,10 @@ function procesarTeclaPresionada(event) {
    }
 }
 
-/********** Funciones de palabras **********/
-
 /**
- * Controla que la palabra exista
- * Cambia el estilo de los casilleros segun si la letra es correcta o no
- * Controla el estado del juego
+ * Controla que la palabra exista,
+ * cambia el estilo de los casilleros segun si la letra es correcta o no
+ * y controla el estado del juego.
  * @param {HTMLCollection} casilleros
  */
 function chequearPalabra(casilleros) {
@@ -159,7 +163,7 @@ function chequearPalabra(casilleros) {
 }
 
 /**
- * Verifica que la palabra exista siendo una palabra válida.
+ * Verifica que la palabra exista, siendo una palabra válida.
  * @param {string} palabra - Palabra a verificar
  * @returns {bool} True si la palabra es válida, False caso contrario
  */
@@ -172,11 +176,9 @@ function verificarPalabra(palabra) {
    return false;
 }
 
-/********** Funciones que controlan el juego **********/
-
 /**
- * Controla el estado del juego. Se fija si gano o si perdio.
- * Envia notificaciones al dom y desactiva el juego.
+ * Controla el estado del juego. Se fija si ganó o si perdió.
+ * Envia notificaciones al DOM y desactiva el juego.
  * @param {string} palabra - Palabra que esta siendo probada
  */
 function controlEstadoJuego(palabra) {
@@ -210,25 +212,25 @@ function comenzarJuego(array, cantidad) {
  * @returns un nuevo array de palabras con la cantidad de letras elegida
  */
 function filtrarPalabras(array, cantidad) {
-   return array.filter((elemento) => {
-      return elemento.length == cantidad;
-   });
+   return array.filter((elemento) => elemento.length == cantidad);
 }
 
 /**
- * Se ocupa de iniciar el juego
- * Comienza con 4 letras por default.
+ * Se ocupa de iniciar el juego.
+ * Obtiene la cantidad del boton seleccionado.
+ * Limpia el contenedor que notifica el estado del juego.
+ * Crea el juego y los casilleros
  */
 function iniciarJuego() {
-   const btn4Letras = document.getElementById("btn4-letras");
+   let cant = parseInt(btnSeleccionado.getAttribute("cantidad"));
    mostrarNotificacion("");
-   comenzarJuego(arrayPalabras, 4);
-   crearCasilleros.call(btn4Letras, 4);
-   cambiarEstiloBotonSeleccionado(btn4Letras);
+   comenzarJuego(arrayPalabras, cant);
+   crearCasilleros(cant);
+   cambiarEstiloBotonSeleccionado(btnSeleccionado);
 }
 
 /**
- * Coloca un mensaje en un contenedor div del html
+ * Coloca un mensaje en un contenedor div del HTML.
  * @param {string} mensaje - Mensaje a mostrar
  */
 function mostrarNotificacion(mensaje) {
@@ -242,6 +244,7 @@ function mostrarNotificacion(mensaje) {
  */
 function cargarJson() {
    return [
+      "Hola",
       "Naranja",
       "Manzana",
       "Coco",
@@ -256,10 +259,12 @@ function cargarJson() {
       "Raton",
       "Estrella",
       "Luna",
+      "Plano",
       "Pepino",
       "Whisky",
       "Atenta",
       "Flacido",
       "Ataque",
+      "Chau"
    ];
 }
