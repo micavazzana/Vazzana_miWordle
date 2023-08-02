@@ -9,8 +9,8 @@ document.getElementById("btn-info").addEventListener("click", displayInfo);
 document.getElementById("cerrar-ajustes").addEventListener("click", displayJuego);
 document.getElementById("cerrar-info").addEventListener("click", displayJuego);
 
-//Comienza mostrando el juego y ocultando los ajustes e info
-displayJuego();
+//Comienza mostrando como jugar y ocultando los ajustes y el juego
+displayInfo();
 
 /**
  * Muestra la sección Ajustes.

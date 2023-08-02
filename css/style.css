@@ -66,6 +66,19 @@ Gris oscuro2: #46464b
    margin-left: 20%;
    margin-right: 20%;
 }
+.bienvenido {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border: 0px;
+   border-radius: 10px;
+   height: 65px;
+   margin: 20px;
+   padding: 1%;
+   background-color: #659444;
+   font-size: 25px;
+   color: white;
+}
 .barra-titulo {
    display: flex;
    align-items: center;
