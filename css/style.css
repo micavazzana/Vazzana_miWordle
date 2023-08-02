@@ -26,6 +26,9 @@ Gris oscuro2: #46464b
    justify-content: center;
    align-items: center;
 }
+.columna{
+   flex-direction: column;
+}
 
 /* Barra de opciones */
 .nav {
@@ -150,12 +153,6 @@ Gris oscuro2: #46464b
 .fila {
    margin-bottom: 5px;
 }
-
-/* Gris claro1: #ededf2
-Gris claro2: #dcdce1
-Gris medio: #a4a4a9
-Gris oscuro1: #6b6b71
-Gris oscuro2: #46464b */
 .casillero {
    border: 2px solid #dcdce1;
    height: 56px;
@@ -186,4 +183,20 @@ Gris oscuro2: #46464b */
 .frio {
    background-color: #a4a4a9;
    transition: 0.3s ease;
+}
+.notificacion{
+  padding: 5px;
+   transition: 0.5s ease;
+}
+.replay {
+   margin: 3px;
+   width: 250px;
+   height: 45px;
+   border: 0px;
+   border-radius: 5px;
+   background-color: #ededf2;
+   font-size: 20px;
+}
+.replay:hover {
+   background-color: #dcdce1;
 }
