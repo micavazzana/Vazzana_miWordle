@@ -1,3 +1,4 @@
+//Este script contiene la clase Juego
 export class Juego {
    palabra;
    intentos;

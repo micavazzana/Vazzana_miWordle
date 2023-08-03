@@ -22,6 +22,9 @@
             <button id="btn-info" type="button">
                <i class="fa-solid fa-circle-info"></i>
             </button>
+            <button id="btn-stats" type="button">
+               <i class="fa-solid fa-ranking-star"></i>
+            </button>
          </nav>
       </header>
 
@@ -62,10 +65,6 @@
                   <button cantidad="8">8</button>
                </div>
             </div>
-
-            <div class="seleccionar-modo-oscuro">
-               <p>MODO OSCURO</p>
-            </div>
          </div>
       </section>
       <!--Fin section Ajustes-->
@@ -103,10 +102,44 @@
                   Si la letra está coloreada en gris entonces la letra no existe
                   en la palabra.
                </p>
+               <button id="jugar" class="jugar">JUGAR</button>
             </div>
          </div>
       </section>
       <!--Fin section Info-->
+
+       <!-- SECCION Estadisticas -->
+       <section id="estadisticas">
+         <div class="estadisticas">
+            <div class="barra-titulo">
+               <h1>ESTADISTICAS</h1>
+               <div>
+                  <i id="cerrar-estadisticas" class="cerrar fa-solid fa-xmark"></i>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="stats">
+                  <div class="stat-num" id="juegos-jugados"></div>
+                  <div class="stat-text">🎮 Juegos Jugados</div>
+               </div>
+               <div class="stats">
+                  <div class="stat-num" id="juegos-ganados"></div>
+                  <div class="stat-text">🏆Juegos Ganados</div>
+               </div>
+               <div class="stats">
+                  <div class="stat-num" id="juegos-perdidos"></div>
+                  <div class="stat-text">😕 Juegos Perdidos</div>
+               </div>
+            </div>
+
+            <div>
+               <button class="reiniciar-stats" id="reset">Reiniciar Estadisticas</button>
+            </div>
+
+         </div>
+      </section>
+      <!--Fin section Estadisticas-->
 
       <script src="./js/display.js"></script>
       <script type="module" src="./js/main.js"></script>

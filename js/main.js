@@ -1,21 +1,23 @@
-//Juego de adivinar palabra. Desarrollé el juego wordle.
 //Este script maneja la lógica del juego y la interacción con el DOM.
 //A futuro mi idea es modularizarlo en archivos para separar el manejo del DOM del el manejo del juego.
 
 import { Juego } from "./juego.js";
+import { arrayPalabras } from "./palabra.js";
 
 /************ Inicio del juego **********/
 let juego;
-let btnSeleccionado = document.getElementById("btn4-letras"); //El juego comienza con 4 letras por defecto
-
-//Incorporo un json para cargar mi array de palabras
-const arrayPalabras = cargarJson();
+//El juego comienza con 4 letras por defecto
+let btnSeleccionado = document.getElementById("btn4-letras");
+//Inicializo las variables de stats con lo almacenado en el local storage
+let juegosJugados = localStorage.getItem("juegosJugados") || 0;
+let juegosGanados = localStorage.getItem("juegosGanados") || 0;
+let juegosPerdidos = localStorage.getItem("juegosPerdidos") || 0;
 
 //Creo una lista de todos los nodos boton. Agrego un escuchador para cada boton.
 //Según el boton seleccionado sera la cantidad de letras elegidas. A partir de estas se crearan los casilleros
 const listBtn = document.querySelectorAll(".cant-letras button");
 listBtn.forEach((btn) =>
-   btn.addEventListener("click", () => {
+   btn.addEventListener("click", () => {      
       //Obtengo la cantidad de casilleros a crear desde el atributo cantidad que estableci en el html
       let cantidad = parseInt(btn.getAttribute("cantidad"));
       //Guardo el boton seleccionado en la variable global
@@ -38,6 +40,8 @@ window.addEventListener("keydown", procesarTeclaPresionada);
 //Si quiere volver a jugar, inicia un nuevo juego
 document.querySelector(".replay").addEventListener("click", iniciarJuego);
 
+//Si quiere reiniciar los stats:
+document.getElementById("reset").addEventListener("click",resetStats);
 
 /********** Funciones **********/
 
@@ -110,7 +114,12 @@ function procesarTeclaPresionada(event) {
       //Si por el contrario escribe
       else {
          //Chequeo que el indice no sean mayor a la cantidad de casilleros y que lo que ingresa el usuario sea valido
-         if ((juego.index < casilleros.length && event.key >= "a" && event.key <= "z") || event.key == "ñ") {
+         if (
+            (juego.index < casilleros.length &&
+               event.key >= "a" &&
+               event.key <= "z") ||
+            event.key == "ñ"
+         ) {
             const casillero = casilleros[juego.index];
             casillero.textContent = event.key.toUpperCase();
             juego.index++;
@@ -169,7 +178,7 @@ function chequearPalabra(casilleros) {
  */
 function verificarPalabra(palabra) {
    for (const p of arrayPalabras) {
-      if (p.toUpperCase() == palabra) {
+      if (p.palabra == palabra) {
          return true;
       }
    }
@@ -178,18 +187,25 @@ function verificarPalabra(palabra) {
 
 /**
  * Controla el estado del juego. Se fija si ganó o si perdió.
- * Envia notificaciones al DOM y desactiva el juego.
+ * Envia notificaciones al DOM, en caso de ganar o perder incrementa la cantidad de juegos jugados,
+ * juegos ganados y juegos perdidos y desactiva el juego.
+ * Por ultimo actualiza los stats.
  * @param {string} palabra - Palabra que esta siendo probada
  */
 function controlEstadoJuego(palabra) {
    let estadoJuego = juego.estadoJuego(palabra);
    if (estadoJuego == "Win") {
       mostrarNotificacion("Ganaste");
+      juegosJugados++;
+      juegosGanados++;
       juego.juegoActivo = false;
    } else if (estadoJuego == "Fail") {
       mostrarNotificacion("Perdiste");
+      juegosJugados++;
+      juegosPerdidos++;
       juego.juegoActivo = false;
    }
+   guardarStats();
 }
 
 /**
@@ -199,20 +215,27 @@ function controlEstadoJuego(palabra) {
  */
 function comenzarJuego(array, cantidad) {
    const arrElegido = filtrarPalabras(array, cantidad);
+   //A fines de pruebas muestro en el console.log con que array estoy jugando
+   console.log(arrElegido);
+
    //Consigo un indice aleatorio del array para construir un nuevo juego con esa palabra
    let indiceAleatorio = Math.floor(Math.random() * arrElegido.length);
    //Instancio el juego con la palabra elegida
    juego = new Juego(arrElegido[indiceAleatorio]);
+   
 }
 
 /**
- * Realiza un filtrado del array de palabras segun la cantidad de letras que se elige
+ * Realiza un filtrado del array de objetos palabra segun la cantidad de letras que se elige
+ * Filtra por cantidad y luego transforma el array de objetos palabra en un array de su propiedad palabra
  * @param {number} cantidad - La cantidad de letras
  * @param {Array} array - El array de palabras que filtrara
  * @returns un nuevo array de palabras con la cantidad de letras elegida
  */
 function filtrarPalabras(array, cantidad) {
-   return array.filter((elemento) => elemento.length == cantidad);
+   return array
+      .filter((elemento) => elemento.palabra.length == cantidad)
+      .map((elemento) => elemento.palabra);
 }
 
 /**
@@ -227,6 +250,7 @@ function iniciarJuego() {
    comenzarJuego(arrayPalabras, cant);
    crearCasilleros(cant);
    cambiarEstiloBotonSeleccionado(btnSeleccionado);
+   actualizarStats();
 }
 
 /**
@@ -239,32 +263,32 @@ function mostrarNotificacion(mensaje) {
 }
 
 /**
- *
- * @returns
+ * Actualiza el valor de los stats mostrados en el DOM de juegos jugados, ganados y perdidos
  */
-function cargarJson() {
-   return [
-      "Hola",
-      "Naranja",
-      "Manzana",
-      "Coco",
-      "Perro",
-      "Gato",
-      "Libro",
-      "Chocolate",
-      "Piano",
-      "Guitarra",
-      "Pintura",
-      "Elefante",
-      "Raton",
-      "Estrella",
-      "Luna",
-      "Plano",
-      "Pepino",
-      "Whisky",
-      "Atenta",
-      "Flacido",
-      "Ataque",
-      "Chau"
-   ];
+function actualizarStats() {
+   document.getElementById("juegos-jugados").textContent = juegosJugados;
+   document.getElementById("juegos-ganados").textContent = juegosGanados;
+   document.getElementById("juegos-perdidos").textContent = juegosPerdidos;
+}
+
+/**
+ * Guarda en el local storage la cantidad de juegos jugados, ganados y perdidos
+ */
+function guardarStats() {
+   localStorage.setItem("juegosJugados", juegosJugados);
+   localStorage.setItem("juegosGanados", juegosGanados);
+   localStorage.setItem("juegosPerdidos", juegosPerdidos);
+}
+
+/**
+ * Resetea las variables que contabilizan los juegos jugados, ganados y perdidos,
+ * borra lo que se encuentra almacenado en el local storage y actualiza el contenido mostrado por DOM
+ */
+function resetStats(){
+   localStorage.clear();
+   juegosJugados = 0;
+   juegosGanados = 0;
+   juegosPerdidos = 0;
+   guardarStats();
+   actualizarStats();
 }

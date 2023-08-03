@@ -29,6 +29,12 @@ Gris oscuro2: #46464b
 .columna{
    flex-direction: column;
 }
+.row{
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   margin: 25px;
+}
 
 /* Barra de opciones */
 .nav {
@@ -131,10 +137,6 @@ Gris oscuro2: #46464b
    background-color: #75aa4e;
    color: white;
 }
-.seleccionar-modo-oscuro {
-   text-align: center;
-   font-size: 19px;
-}
 
 /* Info */
 .info {
@@ -153,6 +155,19 @@ Gris oscuro2: #46464b
 }
 .descripcion-como-jugar p {
    margin: 35px;
+}
+.jugar {
+   margin: 3px;
+   width: 200px;
+   height: 50px;
+   border: 0px;
+   border-radius: 5px;
+   background-color: #659444;
+   font-size: 25px;
+   color: white;
+}
+.jugar:hover{
+   background-color: #75aa4e;
 }
 
 /* Juego */
@@ -212,6 +227,45 @@ Gris oscuro2: #46464b
 }
 .replay:hover {
    background-color: #dcdce1;
+}
+
+/*Estadisticas*/
+.estadisticas {
+   display: flex;
+   flex-direction: column;
+   margin-top: 30px;
+   margin-left: 20%;
+   margin-right: 20%;
+   text-align: center;
+   font-size: 18px;
+}
+.stats{
+   margin: 10px;
+   width: 180px;
+   height: 170px;
+   border: 0px;
+   border-radius: 5px;
+   background-color: #ededf2;
+}
+.stat-num{
+   font-size: 75px ;
+   margin: 3px;
+   padding: 5px;
+}
+.stat-text{
+   font-size: 15px;
+   margin: 3px;
+   padding: 5px;
+}
+.reiniciar-stats{
+   padding: 10px;
+   font-size: 18px;
+   border: 2px solid #46464b;
+   border-radius: 5px;
+}
+.reiniciar-stats:hover{
+   color: white;
+   background-color: #46464b;
 }
 
 /*Estilos para el display*/
