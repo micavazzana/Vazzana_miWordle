@@ -1,4 +1,5 @@
-/* Paleta de colores
+/* 
+Paleta de colores
 Verde:#75aa4e
 Amarillo:#f2c54a
 Gris claro1: #ededf2
@@ -20,26 +21,50 @@ Gris oscuro2: #46464b
    font-family: "Novecentosanswide-DemiBold";
    margin: 0;
    padding: 0;
+   text-align: center;
 }
+
+/* Estilos generales */
 .centrar {
    display: flex;
    justify-content: center;
    align-items: center;
 }
-.columna{
+.columna {
    flex-direction: column;
 }
-.row{
-   display: flex;
+.row {
    flex-direction: row;
-   justify-content: center;
+}
+.margen {
    margin: 25px;
 }
+.seccion {
+   padding: 30px 20%;
+}
+.titulo {
+   height: 65px;
+   padding: 20px;
+   background-color: #659444;
+   font-size: 35px;
+   color: white;
+}
+.bordes-botones {
+   border-style: hidden;
+   border-radius: 5px;
+}
+.bordes-titulos {
+   border-style: hidden;
+   border-radius: 10px;
+}
+.notificacion {
+   padding: 5px;
+   transition: 0.5s ease;
+}
 
-/* Barra de opciones */
+/* Barra de navegacion */
 .nav {
-   margin-left: 20%;
-   margin-right: 20%;
+   margin: 15px 20% 0px;
    display: flex;
    justify-content: end;
 }
@@ -64,120 +89,70 @@ Gris oscuro2: #46464b
    font-size: 20px;
 }
 
-/* Menu de ajustes */
-.ajustes {
-   display: flex;
-   flex-direction: column;
-   margin-top: 30px;
-   margin-left: 20%;
-   margin-right: 20%;
-}
-.bienvenido {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border: 0px;
-   border-radius: 10px;
-   height: 65px;
-   margin: 20px;
-   padding: 1%;
-   background-color: #659444;
-   font-size: 25px;
-   color: white;
-}
+/* Barra de titulo de seccion */
 .barra-titulo {
    display: flex;
    align-items: center;
-   border: 0px;
-   border-radius: 10px;
    background-color: #ededf2;
    height: 45px;
 }
 .barra-titulo h1 {
    flex: 1;
-   display: flex;
-   justify-content: center;
-   padding-left: 50px;
+   margin-left: 15px;
+   padding-left: 25px;
    font-size: 28px;
 }
-.barra-titulo .cerrar {
-   display: flex;
-   justify-content: end;
+.cerrar {
    margin-right: 15px;
    font-size: 25px;
    color: #46464b;
 }
-.barra-titulo .cerrar:hover {
+.cerrar:hover {
    color: #6b6b71;
 }
-.cant-letras {
-   margin: 25px;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-}
-.cant-letras h2 {
+
+/*Clases de seccion Ajustes*/
+.num-letras {
    margin: 15px;
    font-size: 20px;
 }
-.cant-letras button {
+.btns button {
    margin: 3px;
    width: 45px;
    height: 45px;
-   border: 0px;
+   border-style: hidden;
    border-radius: 5px;
    margin-bottom: 10px;
    background-color: #ededf2;
    font-size: 20px;
 }
-.cant-letras button:hover {
-   background-color: #dcdce1;
-}
-.cant-letras button.seleccionado {
-   background-color: #75aa4e;
+.btns button:hover {
    color: white;
+   background-color: #6b6b71;
+}
+.btns button.seleccionado {
+   color: white;
+   background-color: #75aa4e;
 }
 
-/* Info */
-.info {
-   display: flex;
-   flex-direction: column;
-   margin-top: 30px;
-   margin-left: 20%;
-   margin-right: 20%;
-   text-align: center;
-   font-size: 18px;
-}
-.descripcion-como-jugar {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-}
+/* Clases de seccion Info */
 .descripcion-como-jugar p {
+   font-size: 18px;
    margin: 35px;
 }
-.jugar {
+.btn-jugar {
    margin: 3px;
    width: 200px;
    height: 50px;
-   border: 0px;
-   border-radius: 5px;
    background-color: #659444;
    font-size: 25px;
    color: white;
 }
-.jugar:hover{
+.btn-jugar:hover {
    background-color: #75aa4e;
 }
 
-/* Juego */
-.contenedor-filas {
-   margin-top: 30px;
-   margin-left: 20%;
-   margin-right: 20%;
-   display: flex;
-   flex-direction: column;
-}
+/* Clases de seccion Juego */
 .fila {
    margin-bottom: 5px;
 }
@@ -186,92 +161,57 @@ Gris oscuro2: #46464b
    height: 56px;
    width: 56px;
    margin: 3px;
-   border-radius: 5px;
-   text-align: center;
-   color: black;
    font-size: 35px;
-}
-.escrito{
-   border: 2px solid #a4a4a9;
    transition: 0.3s ease;
+}
+.escrito {
+   border: 2px solid #a4a4a9;
 }
 .palabra-jugada {
    color: white;
-   border: 0px;
+   border-style: hidden;
    margin: 5px;
 }
 .caliente {
    background-color: #75aa4e;
-   transition: 0.3s ease;
 }
 .tibio {
    background-color: #f2c54a;
-   transition: 0.3s ease;
 }
 .frio {
    background-color: #a4a4a9;
-   transition: 0.3s ease;
 }
-.notificacion{
-  padding: 5px;
-   transition: 0.5s ease;
-}
-.replay {
+.btn-reiniciar {
    margin: 3px;
    width: 250px;
    height: 45px;
-   border: 0px;
-   border-radius: 5px;
    background-color: #ededf2;
-   font-size: 20px;
-}
-.replay:hover {
-   background-color: #dcdce1;
-}
-
-/*Estadisticas*/
-.estadisticas {
-   display: flex;
-   flex-direction: column;
-   margin-top: 30px;
-   margin-left: 20%;
-   margin-right: 20%;
-   text-align: center;
    font-size: 18px;
 }
-.stats{
+.btn-reiniciar:hover {
+   color: white;
+   background-color: #6b6b71;
+}
+
+/*Clases de seccion Estadisticas*/
+.stats {
    margin: 10px;
    width: 180px;
    height: 170px;
-   border: 0px;
-   border-radius: 5px;
    background-color: #ededf2;
 }
-.stat-num{
-   font-size: 75px ;
+.stats div {
    margin: 3px;
    padding: 5px;
 }
-.stat-text{
+.stat-num {
+   font-size: 75px;
+}
+.stat-text {
    font-size: 15px;
-   margin: 3px;
-   padding: 5px;
-}
-.reiniciar-stats{
-   padding: 10px;
-   font-size: 18px;
-   border: 2px solid #46464b;
-   border-radius: 5px;
-}
-.reiniciar-stats:hover{
-   color: white;
-   background-color: #46464b;
 }
 
-/*Estilos para el display*/
-.mostrar{
-   display: block;
-}
-.ocultar{
+/*Estilo para el display*/
+.ocultar {
    display: none;
 }

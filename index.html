@@ -16,6 +16,9 @@
       <!-- OPCIONES MENU -->
       <header>
          <nav class="nav">
+            <button id="btn-juego" type="button">
+               <i class="fa-solid fa-gamepad"></i>
+            </button>
             <button id="btn-ajustes" type="button">
                <i class="fa-solid fa-gear"></i>
             </button>
@@ -29,115 +32,95 @@
       </header>
 
       <!-- SECCION JUEGO -->
-      <section id="juego">
-         <div class="centrar columna">
-            <div class="bienvenido">
-               <h1>MI WORDLE</h1>
-            </div>
-            <div class="contenedor-filas">
-               <!--Aca creo con el DOM la cantidad de casilleros segun cantidad letras elija-->
-            </div>
-            <div class="notificacion">
-               <!--Aca creo con el DOM la notificacion del estado del juego-->
-            </div>
-            <button class="replay">Volver a jugar</button>
+      <section id="juego" class="seccion centrar columna">
+         <h1 class="titulo centrar bordes-titulos margen">MI WORDLE</h1>
+         <div id="contenedor-filas">
+            <!--Aca creo con el DOM la cantidad de casilleros segun cantidad letras elija-->
          </div>
+         <div class="notificacion">
+            <!--Aca creo con el DOM la notificacion del estado del juego-->
+         </div>
+         <button id="reiniciar" class="btn-reiniciar bordes-botones">Volver a jugar</button>
       </section>
       <!--Fin section juego-->
 
       <!-- SECCION Ajustes -->
-      <section id="ajustes">
-         <div class="ajustes">
-            <div class="barra-titulo">
-               <h1>AJUSTES</h1>
-               <div>
-                  <i id="cerrar-ajustes" class="cerrar fa-solid fa-xmark"></i>
-               </div>
-            </div>
+      <section id="ajustes" class="seccion columna">
+         <div class="barra-titulo bordes-titulos">
+            <h1>AJUSTES</h1>
+            <i id="cerrar-ajustes" class="cerrar fa-solid fa-xmark"></i>
+         </div>
 
-            <div class="cant-letras">
-               <h2>NÚMERO DE LETRAS</h2>
-               <div>
-                  <button id="btn4-letras" cantidad="4">4</button>
-                  <button cantidad="5">5</button>
-                  <button cantidad="6">6</button>
-                  <button cantidad="7">7</button>
-                  <button cantidad="8">8</button>
-               </div>
+         <div class="margen centrar columna">
+            <h2 class="num-letras">NÚMERO DE LETRAS</h2>
+            <div class="btns">
+               <button id="btn4-letras" cantidad="4">4</button>
+               <button cantidad="5">5</button>
+               <button cantidad="6">6</button>
+               <button cantidad="7">7</button>
+               <button cantidad="8">8</button>
             </div>
          </div>
       </section>
       <!--Fin section Ajustes-->
 
-      <!-- SECCION Informacion -->
-      <section id="info">
-         <div class="info">
-            <div class="bienvenido">
-               <h1>BIENVENIDO A MI WORDLE</h1>
-            </div>
-            <div class="barra-titulo">
-               <h1>COMO JUGAR</h1>
-               <div>
-                  <i id="cerrar-info" class="cerrar fa-solid fa-xmark"></i>
-               </div>
-            </div>
-            <div class="descripcion-como-jugar">
-               <p>
-                  Adivina la palabra en 6 intentos. <br />Después de cada
-                  intento, el color de las letras cambia para mostrar qué tan
-                  cerca estás de adivinar la palabra.
-               </p>
-               <div class="casillero centrar palabra-jugada caliente">A</div>
-               <p>
-                  Si la letra está coloreada de verde entonces la letra existe
-                  en la palabra y se encuentra en su posición correcta.
-               </p>
-               <div class="casillero centrar palabra-jugada tibio">B</div>
-               <p>
-                  Si la letra está coloreada de amarillo entonces la letra
-                  existe en la palabra pero no está en su posición correcta.
-               </p>
-               <div class="casillero centrar palabra-jugada frio">C</div>
-               <p>
-                  Si la letra está coloreada en gris entonces la letra no existe
-                  en la palabra.
-               </p>
-               <button id="jugar" class="jugar">JUGAR</button>
-            </div>
+      <!-- SECCION Informacion (Como-jugar) -->
+      <section id="info" class="seccion columna">
+         <h1 class="titulo centrar bordes-titulos margen">BIENVENIDO A MI WORDLE</h1>
+         <div class="barra-titulo bordes-titulos">
+            <h1>COMO JUGAR</h1>
+            <i id="cerrar-info" class="cerrar fa-solid fa-xmark"></i>
+         </div>
+
+         <div class="descripcion-como-jugar centrar columna">
+            <p>
+               Adivina la palabra en 6 intentos. <br />Después de cada intento,
+               el color de las letras cambia para mostrar qué tan cerca estás de
+               adivinar la palabra.
+            </p>
+            <div class="casillero centrar palabra-jugada caliente bordes-botones">A</div>
+            <p>
+               Si la letra está coloreada de verde entonces la letra existe en
+               la palabra y se encuentra en su posición correcta.
+            </p>
+            <div class="casillero centrar palabra-jugada tibio bordes-botones">B</div>
+            <p>
+               Si la letra está coloreada de amarillo entonces la letra existe
+               en la palabra pero no está en su posición correcta.
+            </p>
+            <div class="casillero centrar palabra-jugada frio bordes-botones">C</div>
+            <p>
+               Si la letra está coloreada en gris entonces la letra no existe en
+               la palabra.
+            </p>
+            <button id="jugar" class="btn-jugar bordes-botones">JUGAR</button>
          </div>
       </section>
       <!--Fin section Info-->
 
-       <!-- SECCION Estadisticas -->
-       <section id="estadisticas">
-         <div class="estadisticas">
-            <div class="barra-titulo">
-               <h1>ESTADISTICAS</h1>
-               <div>
-                  <i id="cerrar-estadisticas" class="cerrar fa-solid fa-xmark"></i>
-               </div>
-            </div>
-
-            <div class="row">
-               <div class="stats">
-                  <div class="stat-num" id="juegos-jugados"></div>
-                  <div class="stat-text">🎮 Juegos Jugados</div>
-               </div>
-               <div class="stats">
-                  <div class="stat-num" id="juegos-ganados"></div>
-                  <div class="stat-text">🏆Juegos Ganados</div>
-               </div>
-               <div class="stats">
-                  <div class="stat-num" id="juegos-perdidos"></div>
-                  <div class="stat-text">😕 Juegos Perdidos</div>
-               </div>
-            </div>
-
-            <div>
-               <button class="reiniciar-stats" id="reset">Reiniciar Estadisticas</button>
-            </div>
-
+      <!-- SECCION Estadisticas -->
+      <section id="estadisticas" class="seccion columna">
+         <div class="barra-titulo bordes-titulos">
+            <h1>ESTADISTICAS</h1>
+            <i id="cerrar-estadisticas" class="cerrar fa-solid fa-xmark"></i>
          </div>
+
+         <div class="centrar margen">
+            <div class="stats bordes-botones">
+               <div class="stat-num" id="juegos-jugados"></div>
+               <div class="stat-text">🎮 Juegos Jugados</div>
+            </div>
+            <div class="stats bordes-botones">
+               <div class="stat-num" id="juegos-ganados"></div>
+               <div class="stat-text">🏆Juegos Ganados</div>
+            </div>
+            <div class="stats bordes-botones">
+               <div class="stat-num" id="juegos-perdidos"></div>
+               <div class="stat-text">😕 Juegos Perdidos</div>
+            </div>
+         </div>
+
+         <button class="btn-reiniciar bordes-botones" id="reset">Reiniciar Estadisticas</button>
       </section>
       <!--Fin section Estadisticas-->
 

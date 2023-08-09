@@ -1,6 +1,7 @@
 //Este script maneja la lógica del juego y la interacción con el DOM.
 //A futuro mi idea es modularizarlo en archivos para separar el manejo del DOM del el manejo del juego.
 
+import { Estadisticas } from "./estadisticas.js";
 import { Juego } from "./juego.js";
 import { arrayPalabras } from "./palabra.js";
 
@@ -8,40 +9,32 @@ import { arrayPalabras } from "./palabra.js";
 let juego;
 //El juego comienza con 4 letras por defecto
 let btnSeleccionado = document.getElementById("btn4-letras");
-//Inicializo las variables de stats con lo almacenado en el local storage
-let juegosJugados = localStorage.getItem("juegosJugados") || 0;
-let juegosGanados = localStorage.getItem("juegosGanados") || 0;
-let juegosPerdidos = localStorage.getItem("juegosPerdidos") || 0;
+//Instancio un objeto estadisticas que contiene las variables de stats con lo almacenado en el local storage
+const stats = new Estadisticas();
+
+//Inicia el juego tomando como referencia uno de los botones de cantidad de letras
+//Según el boton seleccionado se crearan los casilleros
+iniciarJuego(btnSeleccionado);
 
 //Creo una lista de todos los nodos boton. Agrego un escuchador para cada boton.
-//Según el boton seleccionado sera la cantidad de letras elegidas. A partir de estas se crearan los casilleros
-const listBtn = document.querySelectorAll(".cant-letras button");
+//Segun el boton inicio un nuevo juego con ese boton
+const listBtn = document.querySelectorAll(".btns button");
 listBtn.forEach((btn) =>
-   btn.addEventListener("click", () => {      
-      //Obtengo la cantidad de casilleros a crear desde el atributo cantidad que estableci en el html
-      let cantidad = parseInt(btn.getAttribute("cantidad"));
-      //Guardo el boton seleccionado en la variable global
-      btnSeleccionado = btn;
-      //Intancio el juego segun la cantidad de letras que se eligio
-      comenzarJuego(arrayPalabras, cantidad);
-      //Limpio el contenedor de mensajes
-      mostrarNotificacion("");
-      //Creo casilleros y coloreo el botón que determina con qué cantidad de letras estamos jugando
-      crearCasilleros(cantidad);
-      cambiarEstiloBotonSeleccionado(btn);
+   btn.addEventListener("click", () => {
+      iniciarJuego(btn);
    })
 );
-
-iniciarJuego();
 
 //Suscribo la función "procesarTeclaPresionada" al evento keydown.
 window.addEventListener("keydown", procesarTeclaPresionada);
 
 //Si quiere volver a jugar, inicia un nuevo juego
-document.querySelector(".replay").addEventListener("click", iniciarJuego);
+document
+   .getElementById("reiniciar")
+   .addEventListener("click", () => iniciarJuego(btnSeleccionado));
 
 //Si quiere reiniciar los stats:
-document.getElementById("reset").addEventListener("click",resetStats);
+document.getElementById("reset").addEventListener("click", stats.resetStats);
 
 /********** Funciones **********/
 
@@ -52,7 +45,7 @@ document.getElementById("reset").addEventListener("click",resetStats);
 function crearCasilleros(cantidad) {
    //Borro lo que hay en el inner del contenedor para crear los casilleros que corresponden
    //Reseteo las variables que manejan los casilleros y los numeros de fila cada vez
-   const contenedor = document.querySelector(".contenedor-filas");
+   const contenedor = document.getElementById("contenedor-filas");
    contenedor.innerHTML = "";
    juego.init();
 
@@ -60,13 +53,13 @@ function crearCasilleros(cantidad) {
    for (let i = 0; i < juego.intentos; i++) {
       //Creo un div para cada fila
       const divFila = document.createElement("div");
-      divFila.className = "fila centrar";
+      divFila.classList.add("fila", "centrar");
       divFila.setAttribute("id", `fila${i + 1}`);
 
       //Creo los casilleros segun la cantidad de letras elegida
       for (let j = 0; j < cantidad; j++) {
          const div = document.createElement("div");
-         div.className = "casillero centrar";
+         div.classList.add("casillero", "centrar", "bordes-botones");
          divFila.appendChild(div);
       }
       contenedor.appendChild(divFila); //Apendeo cada fila al contenedor
@@ -78,7 +71,7 @@ function crearCasilleros(cantidad) {
  * @param {node} boton - Elemento nodo del DOM. Representa un botón.
  */
 function cambiarEstiloBotonSeleccionado(boton) {
-   const listaBtn = document.querySelectorAll(".cant-letras button");
+   const listaBtn = document.querySelectorAll(".btns button");
    listaBtn.forEach((btn) => {
       //Si el boton es el seleccionado le añado la clase "seleccionado"
       if (btn == boton) btn.classList.add("seleccionado");
@@ -114,12 +107,7 @@ function procesarTeclaPresionada(event) {
       //Si por el contrario escribe
       else {
          //Chequeo que el indice no sean mayor a la cantidad de casilleros y que lo que ingresa el usuario sea valido
-         if (
-            (juego.index < casilleros.length &&
-               event.key >= "a" &&
-               event.key <= "z") ||
-            event.key == "ñ"
-         ) {
+         if (juego.index < casilleros.length && esLetraValida(event.key)) {
             const casillero = casilleros[juego.index];
             casillero.textContent = event.key.toUpperCase();
             juego.index++;
@@ -131,6 +119,20 @@ function procesarTeclaPresionada(event) {
          }
       }
    }
+}
+
+/**
+ * Verifica si la letra ingresada es una letra
+ * @param {*} letra - Letra a verificar
+ * @returns True si la letra es válida, False caso contrario
+ */
+function esLetraValida(letra) {
+   return (
+      (letra.length == 1 &&
+         ((letra >= "a" && letra <= "z") || (letra >= "A" && letra <= "Z"))) ||
+      letra == "ñ" ||
+      letra == "Ñ"
+   );
 }
 
 /**
@@ -196,16 +198,16 @@ function controlEstadoJuego(palabra) {
    let estadoJuego = juego.estadoJuego(palabra);
    if (estadoJuego == "Win") {
       mostrarNotificacion("Ganaste");
-      juegosJugados++;
-      juegosGanados++;
+      stats.juegosJugados++;
+      stats.juegosGanados++;
       juego.juegoActivo = false;
    } else if (estadoJuego == "Fail") {
       mostrarNotificacion("Perdiste");
-      juegosJugados++;
-      juegosPerdidos++;
+      stats.juegosJugados++;
+      stats.juegosPerdidos++;
       juego.juegoActivo = false;
    }
-   guardarStats();
+   stats.guardarStats();
 }
 
 /**
@@ -213,16 +215,12 @@ function controlEstadoJuego(palabra) {
  * Comienza el juego según la cantidad de letras elegida.
  * @param {number} cantidad - Cantidad de letras que tendrá la palabra
  */
-function comenzarJuego(array, cantidad) {
+function instanciarJuego(array, cantidad) {
    const arrElegido = filtrarPalabras(array, cantidad);
-   //A fines de pruebas muestro en el console.log con que array estoy jugando
-   console.log(arrElegido);
-
    //Consigo un indice aleatorio del array para construir un nuevo juego con esa palabra
    let indiceAleatorio = Math.floor(Math.random() * arrElegido.length);
    //Instancio el juego con la palabra elegida
-   juego = new Juego(arrElegido[indiceAleatorio]);
-   
+   return new Juego(arrElegido[indiceAleatorio]);
 }
 
 /**
@@ -243,14 +241,21 @@ function filtrarPalabras(array, cantidad) {
  * Obtiene la cantidad del boton seleccionado.
  * Limpia el contenedor que notifica el estado del juego.
  * Crea el juego y los casilleros
+ * Actualiza las variables que contienen las estadisticas del juego
  */
-function iniciarJuego() {
-   let cant = parseInt(btnSeleccionado.getAttribute("cantidad"));
+function iniciarJuego(btn) {
+   //Obtengo la cantidad de casilleros a crear desde el atributo cantidad que estableci en el html
+   let cantidad = parseInt(btn.getAttribute("cantidad"));
+   //Intancio el juego segun la cantidad de letras que se eligio
+   juego = instanciarJuego(arrayPalabras, cantidad);
+   //Limpio el contenedor de mensajes
    mostrarNotificacion("");
-   comenzarJuego(arrayPalabras, cant);
-   crearCasilleros(cant);
-   cambiarEstiloBotonSeleccionado(btnSeleccionado);
-   actualizarStats();
+   //Creo casilleros y coloreo el botón que determina con qué cantidad de letras estamos jugando
+   crearCasilleros(cantidad);
+   cambiarEstiloBotonSeleccionado(btn);
+   //Actualizo los stats guardados en el local storage
+   stats.actualizarStats();
+   btnSeleccionado = btn;
 }
 
 /**
@@ -260,35 +265,4 @@ function iniciarJuego() {
 function mostrarNotificacion(mensaje) {
    const contenedor = document.querySelector(".notificacion");
    contenedor.textContent = mensaje;
-}
-
-/**
- * Actualiza el valor de los stats mostrados en el DOM de juegos jugados, ganados y perdidos
- */
-function actualizarStats() {
-   document.getElementById("juegos-jugados").textContent = juegosJugados;
-   document.getElementById("juegos-ganados").textContent = juegosGanados;
-   document.getElementById("juegos-perdidos").textContent = juegosPerdidos;
-}
-
-/**
- * Guarda en el local storage la cantidad de juegos jugados, ganados y perdidos
- */
-function guardarStats() {
-   localStorage.setItem("juegosJugados", juegosJugados);
-   localStorage.setItem("juegosGanados", juegosGanados);
-   localStorage.setItem("juegosPerdidos", juegosPerdidos);
-}
-
-/**
- * Resetea las variables que contabilizan los juegos jugados, ganados y perdidos,
- * borra lo que se encuentra almacenado en el local storage y actualiza el contenido mostrado por DOM
- */
-function resetStats(){
-   localStorage.clear();
-   juegosJugados = 0;
-   juegosGanados = 0;
-   juegosPerdidos = 0;
-   guardarStats();
-   actualizarStats();
 }
