@@ -1,19 +1,17 @@
 //Este script maneja la lógica del juego y la interacción con el DOM.
-//A futuro mi idea es modularizarlo en archivos para separar el manejo del DOM del el manejo del juego.
 
 import { Estadisticas } from "./estadisticas.js";
 import { Juego } from "./juego.js";
 import { arrayPalabras } from "./palabra.js";
 
 /************ Inicio del juego **********/
-let juego;
 //El juego comienza con 4 letras por defecto
+//Según el boton seleccionado se crearan los casilleros, iniciando el juego
+
+let juego;
 let btnSeleccionado = document.getElementById("btn4-letras");
-//Instancio un objeto estadisticas que contiene las variables de stats con lo almacenado en el local storage
 const stats = new Estadisticas();
 
-//Inicia el juego tomando como referencia uno de los botones de cantidad de letras
-//Según el boton seleccionado se crearan los casilleros
 iniciarJuego(btnSeleccionado);
 
 //Creo una lista de todos los nodos boton. Agrego un escuchador para cada boton.
@@ -29,9 +27,7 @@ listBtn.forEach((btn) =>
 window.addEventListener("keydown", procesarTeclaPresionada);
 
 //Si quiere volver a jugar, inicia un nuevo juego
-document
-   .getElementById("reiniciar")
-   .addEventListener("click", () => iniciarJuego(btnSeleccionado));
+document.getElementById("reiniciar").addEventListener("click", () => iniciarJuego(btnSeleccionado));
 
 //Si quiere reiniciar los stats:
 document.getElementById("reset").addEventListener("click", stats.resetStats);
@@ -127,12 +123,9 @@ function procesarTeclaPresionada(event) {
  * @returns True si la letra es válida, False caso contrario
  */
 function esLetraValida(letra) {
-   return (
-      (letra.length == 1 &&
-         ((letra >= "a" && letra <= "z") || (letra >= "A" && letra <= "Z"))) ||
-      letra == "ñ" ||
-      letra == "Ñ"
-   );
+   return ((letra.length == 1 &&
+         ((letra >= "a" && letra <= "z") || (letra >= "A" && letra <= "Z"))) 
+         || letra == "ñ" || letra == "Ñ");
 }
 
 /**
@@ -144,9 +137,7 @@ function esLetraValida(letra) {
 function chequearPalabra(casilleros) {
    //Construyo la palabra a partir de los casilleros para poder verificarla
    const palabra = Array.from(casilleros).reduce(
-      (char, casillero) => char + casillero.textContent,
-      ""
-   );
+      (char, casillero) => char + casillero.textContent,"");
 
    //Si la palabra existe es una palabra válida
    if (verificarPalabra(palabra)) {
