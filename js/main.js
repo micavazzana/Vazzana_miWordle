@@ -1,25 +1,23 @@
 //Este script maneja la lógica del juego y la interacción con el DOM.
 
-import { Estadisticas } from "./estadisticas.js";
 import { Juego } from "./juego.js";
 import { arrayPalabras } from "./palabra.js";
+import { stats } from "./estadisticas.js";
 
-/************ Inicio del juego **********/
+//#region Juego
 //El juego comienza con 4 letras por defecto
-//Según el boton seleccionado se crearan los casilleros, iniciando el juego
-
+//Según el boton seleccionado se crearan los casilleros (El boton representa la cantidad de letras elegida)
 let juego;
 let btnSeleccionado = document.getElementById("btn4-letras");
-const stats = new Estadisticas();
 
-iniciarJuego(btnSeleccionado);
+iniciarJuego(arrayPalabras, btnSeleccionado);
 
 //Creo una lista de todos los nodos boton. Agrego un escuchador para cada boton.
 //Segun el boton inicio un nuevo juego con ese boton
 const listBtn = document.querySelectorAll(".btns button");
 listBtn.forEach((btn) =>
    btn.addEventListener("click", () => {
-      iniciarJuego(btn);
+      iniciarJuego(arrayPalabras, btn);
    })
 );
 
@@ -27,12 +25,63 @@ listBtn.forEach((btn) =>
 window.addEventListener("keydown", procesarTeclaPresionada);
 
 //Si quiere volver a jugar, inicia un nuevo juego
-document.getElementById("reiniciar").addEventListener("click", () => iniciarJuego(btnSeleccionado));
+document.getElementById("reiniciar").addEventListener("click", () =>
+      iniciarJuego(arrayPalabras, btnSeleccionado)
+   );
 
 //Si quiere reiniciar los stats:
 document.getElementById("reset").addEventListener("click", stats.resetStats);
 
-/********** Funciones **********/
+//#endregion
+
+//#region Funciones
+
+/**
+ * Se ocupa de iniciar el juego.
+ * Obtiene la cantidad del boton seleccionado.
+ * Crea el juego y los casilleros.
+ * Actualiza las variables que contienen las estadisticas del juego
+ * @param {array} array - El array de objetos Palabra
+ * @param {node} btn - Elemento nodo del DOM. Representa el botón que es seleccionado.(Cantidad de letras a jugar)
+ */
+function iniciarJuego(array, btn) {
+   let cantidad = parseInt(btn.getAttribute("cantidad"));
+   juego = instanciarJuego(array, cantidad);
+   crearCasilleros(cantidad);
+   cambiarEstiloBotonSeleccionado(btn);
+   stats.actualizarStats();
+   //Me guardo cuál es el botón seleccionado para saber, si reinicia el juego, con cuantas letras está jugando
+   btnSeleccionado = btn;
+}
+
+/**
+ * Se ocupa de instanciar un nuevo juego.
+ * Comienza el juego según la cantidad de letras elegida.
+ * @param {array} array - El array de objetos Palabra
+ * @param {number} cantidad - Cantidad de letras que tendrá la palabra
+ * @returns un nuevo objeto Juego
+ */
+function instanciarJuego(array, cantidad) {
+   const arrElegido = filtrarPalabras(array, cantidad);
+   //Consigo un indice aleatorio del array para construir un nuevo juego con esa palabra
+   let indiceAleatorio = Math.floor(Math.random() * arrElegido.length);
+   //Instancio el juego con la palabra elegida
+   console.log(arrElegido[indiceAleatorio]);
+   return new Juego(arrElegido[indiceAleatorio]);
+}
+
+/**
+ * Realiza un filtrado del array de objetos palabra segun la cantidad de letras que se elige
+ * Filtra por cantidad y luego transforma el array de objetos palabra en un array de su propiedad palabra
+ * @param {number} cantidad - La cantidad de letras
+ * @param {Array} array - El array de palabras que filtrara
+ * @returns un nuevo array de palabras con la cantidad de letras elegida
+ */
+function filtrarPalabras(array, cantidad) {
+   return array
+      .filter((elemento) => elemento.palabra.length == cantidad)
+      .map((elemento) => elemento.palabra);
+}
 
 /**
  * Crea los casilleros segun la cantidad de letras elegida.
@@ -40,7 +89,7 @@ document.getElementById("reset").addEventListener("click", stats.resetStats);
  */
 function crearCasilleros(cantidad) {
    //Borro lo que hay en el inner del contenedor para crear los casilleros que corresponden
-   //Reseteo las variables que manejan los casilleros y los numeros de fila cada vez
+   //Reseteo las variables que manejan los casilleros y los numeros de fila cada vez dentro del obj juego
    const contenedor = document.getElementById("contenedor-filas");
    contenedor.innerHTML = "";
    juego.init();
@@ -97,7 +146,6 @@ function procesarTeclaPresionada(event) {
             const casillero = casilleros[juego.index];
             casillero.textContent = "";
             casillero.classList.remove("escrito");
-            mostrarNotificacion("");
          }
       }
       //Si por el contrario escribe
@@ -123,9 +171,12 @@ function procesarTeclaPresionada(event) {
  * @returns True si la letra es válida, False caso contrario
  */
 function esLetraValida(letra) {
-   return ((letra.length == 1 &&
-         ((letra >= "a" && letra <= "z") || (letra >= "A" && letra <= "Z"))) 
-         || letra == "ñ" || letra == "Ñ");
+   return (
+      (letra.length == 1 &&
+         ((letra >= "a" && letra <= "z") || (letra >= "A" && letra <= "Z"))) ||
+      letra == "ñ" ||
+      letra == "Ñ"
+   );
 }
 
 /**
@@ -137,13 +188,15 @@ function esLetraValida(letra) {
 function chequearPalabra(casilleros) {
    //Construyo la palabra a partir de los casilleros para poder verificarla
    const palabra = Array.from(casilleros).reduce(
-      (char, casillero) => char + casillero.textContent,"");
+      (char, casillero) => char + casillero.textContent,
+      ""
+   );
 
    //Si la palabra existe es una palabra válida
    if (verificarPalabra(palabra)) {
       for (let i = 0; i < juego.palabra.length; i++) {
+         //Todas las letras tendran el estilo palabra-jugada
          casilleros[i].classList.add("palabra-jugada");
-
          //Si la letra esta en el indice correcto
          if (casilleros[i].textContent == juego.palabra[i])
             casilleros[i].classList.add("caliente");
@@ -160,7 +213,10 @@ function chequearPalabra(casilleros) {
       //Por cada palabra que se prueba controlo el estado del juego
       controlEstadoJuego(palabra);
    } else {
-      mostrarNotificacion("Palabra no encontrada. Intenta con otra.");
+      mostrarNotificacion(
+         "Palabra no encontrada. Intenta con otra.",
+         "#6b6b71"
+      );
    }
 }
 
@@ -180,20 +236,23 @@ function verificarPalabra(palabra) {
 
 /**
  * Controla el estado del juego. Se fija si ganó o si perdió.
- * Envia notificaciones al DOM, en caso de ganar o perder incrementa la cantidad de juegos jugados,
- * juegos ganados y juegos perdidos y desactiva el juego.
+ * Muestra una notificacion, en caso de ganar o perder incrementa la cantidad de juegos jugados,
+ * juegos ganados y juegos perdidos y desactiva el juego en caso de ganar o perder.
  * Por ultimo actualiza los stats.
  * @param {string} palabra - Palabra que esta siendo probada
  */
 function controlEstadoJuego(palabra) {
    let estadoJuego = juego.estadoJuego(palabra);
    if (estadoJuego == "Win") {
-      mostrarNotificacion("Ganaste");
+      mostrarNotificacion("🥳 Ganaste! 🎉", "#75aa4e");
       stats.juegosJugados++;
       stats.juegosGanados++;
       juego.juegoActivo = false;
    } else if (estadoJuego == "Fail") {
-      mostrarNotificacion("Perdiste");
+      mostrarNotificacion(
+         `😔 Perdiste 💔\nLa palabra era: ${juego.palabra}`,
+         "#c20742"
+      );
       stats.juegosJugados++;
       stats.juegosPerdidos++;
       juego.juegoActivo = false;
@@ -202,58 +261,20 @@ function controlEstadoJuego(palabra) {
 }
 
 /**
- * Se ocupa de instanciar un nuevo juego.
- * Comienza el juego según la cantidad de letras elegida.
- * @param {number} cantidad - Cantidad de letras que tendrá la palabra
- */
-function instanciarJuego(array, cantidad) {
-   const arrElegido = filtrarPalabras(array, cantidad);
-   //Consigo un indice aleatorio del array para construir un nuevo juego con esa palabra
-   let indiceAleatorio = Math.floor(Math.random() * arrElegido.length);
-   //Instancio el juego con la palabra elegida
-   return new Juego(arrElegido[indiceAleatorio]);
-}
-
-/**
- * Realiza un filtrado del array de objetos palabra segun la cantidad de letras que se elige
- * Filtra por cantidad y luego transforma el array de objetos palabra en un array de su propiedad palabra
- * @param {number} cantidad - La cantidad de letras
- * @param {Array} array - El array de palabras que filtrara
- * @returns un nuevo array de palabras con la cantidad de letras elegida
- */
-function filtrarPalabras(array, cantidad) {
-   return array
-      .filter((elemento) => elemento.palabra.length == cantidad)
-      .map((elemento) => elemento.palabra);
-}
-
-/**
- * Se ocupa de iniciar el juego.
- * Obtiene la cantidad del boton seleccionado.
- * Limpia el contenedor que notifica el estado del juego.
- * Crea el juego y los casilleros
- * Actualiza las variables que contienen las estadisticas del juego
- */
-function iniciarJuego(btn) {
-   //Obtengo la cantidad de casilleros a crear desde el atributo cantidad que estableci en el html
-   let cantidad = parseInt(btn.getAttribute("cantidad"));
-   //Intancio el juego segun la cantidad de letras que se eligio
-   juego = instanciarJuego(arrayPalabras, cantidad);
-   //Limpio el contenedor de mensajes
-   mostrarNotificacion("");
-   //Creo casilleros y coloreo el botón que determina con qué cantidad de letras estamos jugando
-   crearCasilleros(cantidad);
-   cambiarEstiloBotonSeleccionado(btn);
-   //Actualizo los stats guardados en el local storage
-   stats.actualizarStats();
-   btnSeleccionado = btn;
-}
-
-/**
- * Coloca un mensaje en un contenedor div del HTML.
+ * Muestra un mensaje en un toast.
  * @param {string} mensaje - Mensaje a mostrar
+ * @param {string} color - Color de fondo que tendra la notificacion
  */
-function mostrarNotificacion(mensaje) {
-   const contenedor = document.querySelector(".notificacion");
-   contenedor.textContent = mensaje;
+function mostrarNotificacion(mensaje, color) {
+   Toastify({
+      text: mensaje,
+      duration: 3000,
+      gravity: "top",
+      position: "center",
+      style: {
+         background: color,
+         color: "white",
+      },
+   }).showToast();
 }
+//#endregion

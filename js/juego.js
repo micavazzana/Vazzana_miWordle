@@ -40,6 +40,9 @@ export class Juego {
       return retorno;
    }
 
+   /**
+    * Inicializa las variables index, numeroFila y juegoActivo en sus valores por default
+    */
    init() {
       this.index = 0;
       this.numeroFila = 1;

@@ -3,6 +3,10 @@ export class Estadisticas {
    juegosGanados;
    juegosPerdidos;
 
+   /**
+    * Constructor.
+    * Levanta del local storage los valores almacenados para inicializar los atributos
+    */
    constructor() {
       this.juegosJugados = localStorage.getItem("juegosJugados") || 0;
       this.juegosGanados = localStorage.getItem("juegosGanados") || 0;
@@ -13,12 +17,9 @@ export class Estadisticas {
     * Actualiza el valor de los stats mostrados en el DOM de juegos jugados, ganados y perdidos
     */
    actualizarStats() {
-      document.getElementById("juegos-jugados").textContent =
-         this.juegosJugados;
-      document.getElementById("juegos-ganados").textContent =
-         this.juegosGanados;
-      document.getElementById("juegos-perdidos").textContent =
-         this.juegosPerdidos;
+      document.getElementById("juegos-jugados").textContent = this.juegosJugados;
+      document.getElementById("juegos-ganados").textContent = this.juegosGanados;
+      document.getElementById("juegos-perdidos").textContent = this.juegosPerdidos;
    }
 
    /**
@@ -34,6 +35,8 @@ export class Estadisticas {
     * Resetea las variables que contabilizan los juegos jugados, ganados y perdidos,
     * borra lo que se encuentra almacenado en el local storage y actualiza el contenido mostrado por DOM
     */
+   //Comentario: Tuve que utilizar una expresión lamda para que el valor de this lo tome del contexto en el que está (la clase)
+   //Sino funcionaba erráticamente no tomando correctamente el valor del objeto instanciado.
    resetStats = () => {
       localStorage.clear();
       this.juegosJugados = 0;
@@ -43,3 +46,5 @@ export class Estadisticas {
       this.actualizarStats();
    };
 }
+
+export const stats = new Estadisticas(); //exporto objeto Estadisticas

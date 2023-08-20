@@ -3,7 +3,9 @@
    <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" href="./assets/weebly.svg" type="image/x-icon">
+      <link rel="shortcut icon" href="./assets/W.svg" type="image/x-icon">
+      
+      <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
       
       <!--Iconos-->
       <script src="https://kit.fontawesome.com/0b836feca7.js" crossorigin="anonymous"></script>
@@ -35,9 +37,6 @@
          <h1 class="titulo centrar bordes-titulos margen">MI WORDLE</h1>
          <div id="contenedor-filas">
             <!--Aca creo con el DOM la cantidad de casilleros segun cantidad letras elija-->
-         </div>
-         <div class="notificacion">
-            <!--Aca creo con el DOM la notificacion del estado del juego-->
          </div>
          <button id="reiniciar" class="btn-reiniciar bordes-botones">Volver a jugar</button>
       </section>
@@ -123,6 +122,8 @@
       </section>
       <!--Fin section Estadisticas-->
 
+      <!--Scripts-->
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
       <script src="./js/display.js"></script>
       <script type="module" src="./js/main.js"></script>
    </body>
