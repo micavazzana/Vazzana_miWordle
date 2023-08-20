@@ -62,6 +62,7 @@ function iniciarJuego(array, btn) {
  * @returns un nuevo objeto Juego
  */
 function instanciarJuego(array, cantidad) {
+   
    const arrElegido = filtrarPalabras(array, cantidad);
    //Consigo un indice aleatorio del array para construir un nuevo juego con esa palabra
    let indiceAleatorio = Math.floor(Math.random() * arrElegido.length);
