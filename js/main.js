@@ -68,7 +68,6 @@ function instanciarJuego(array, cantidad) {
    //Consigo un indice aleatorio del array para construir un nuevo juego con esa palabra
    let indiceAleatorio = Math.floor(Math.random() * arrElegido.length);
    //Instancio el juego con la palabra elegida
-   console.log(arrElegido[indiceAleatorio]);
    return new Juego(arrElegido[indiceAleatorio]);
 }
 
