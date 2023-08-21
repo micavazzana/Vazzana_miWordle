@@ -5,6 +5,7 @@ import { arrayPalabras } from "./palabra.js";
 import { stats } from "./estadisticas.js";
 
 //#region Juego
+
 //El juego comienza con 4 letras por defecto
 //Según el boton seleccionado se crearan los casilleros (El boton representa la cantidad de letras elegida)
 let juego;
@@ -173,11 +174,9 @@ function procesarTeclaPresionada(event) {
  */
 function esLetraValida(letra) {
    return (
-      (letra.length == 1 &&
-         ((letra >= "a" && letra <= "z") || (letra >= "A" && letra <= "Z"))) ||
-      letra == "ñ" ||
-      letra == "Ñ"
-   );
+      (letra.length == 1 
+         && ((letra >= "a" && letra <= "z") || (letra >= "A" && letra <= "Z"))) 
+         || letra == "ñ" || letra == "Ñ");
 }
 
 /**
@@ -188,10 +187,8 @@ function esLetraValida(letra) {
  */
 function chequearPalabra(casilleros) {
    //Construyo la palabra a partir de los casilleros para poder verificarla
-   const palabra = Array.from(casilleros).reduce(
-      (char, casillero) => char + casillero.textContent,
-      ""
-   );
+   const palabra = Array.from(casilleros)
+   .reduce((char, casillero) => char + casillero.textContent,"");
 
    //Si la palabra existe es una palabra válida
    if (verificarPalabra(palabra)) {
@@ -214,10 +211,7 @@ function chequearPalabra(casilleros) {
       //Por cada palabra que se prueba controlo el estado del juego
       controlEstadoJuego(palabra);
    } else {
-      mostrarNotificacion(
-         "Palabra no encontrada. Intenta con otra.",
-         "#6b6b71"
-      );
+      mostrarNotificacion("Palabra no encontrada. Intenta con otra.", "#6b6b71");
    }
 }
 
@@ -250,10 +244,7 @@ function controlEstadoJuego(palabra) {
       stats.juegosGanados++;
       juego.juegoActivo = false;
    } else if (estadoJuego == "Fail") {
-      mostrarNotificacion(
-         `😔 Perdiste 💔\nLa palabra era: ${juego.palabra}`,
-         "#c20742"
-      );
+      mostrarNotificacion(`😔 Perdiste 💔\nLa palabra era: ${juego.palabra}`, "#c20742");
       stats.juegosJugados++;
       stats.juegosPerdidos++;
       juego.juegoActivo = false;
@@ -278,4 +269,5 @@ function mostrarNotificacion(mensaje, color) {
       },
    }).showToast();
 }
+
 //#endregion
